@@ -77,3 +77,5 @@ python3 -m http.server 8000
 - **任意の追加対策**：Google Cloud コンソールで API キーに「HTTP リファラー制限」
   （`https://<ユーザー名>.github.io/*`）を付けると、他サイトからの利用を防げます。
 - イベントの削除や編集は、Firebase コンソールの Firestore 画面から行えます。
+
+https://pir0zhki.github.io/Ajustment/

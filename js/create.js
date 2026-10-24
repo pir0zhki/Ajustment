@@ -115,8 +115,8 @@ $('clear-dates').addEventListener('click', () => {
 
 /* ---------- 時間帯 ---------- */
 function setupHours() {
-  for (let i = 0; i <= 23; i++) $('start-hour').append(h('option', { value: i }, `${i}:00`));
-  for (let i = 1; i <= 24; i++) $('end-hour').append(h('option', { value: i }, `${i}:00`));
+  for (let i = 0; i <= 25; i++) $('start-hour').append(h('option', { value: i }, `${i}:00`));
+  for (let i = 1; i <= 26; i++) $('end-hour').append(h('option', { value: i }, `${i}:00`));
   $('start-hour').value = '9';
   $('end-hour').value = '21';
 }
