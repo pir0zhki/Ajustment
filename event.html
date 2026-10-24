@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>日程調整ツール</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="app-header-inner">
+      <a class="logo" href="./">📅 日程調整ツール</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div id="demo-banner" class="notice" hidden>
+      <strong>デモモードで動作中：</strong>データはこのブラウザ内（localStorage）にだけ保存され、他の人とは共有されません。
+      <code>js/firebase-config.js</code> を設定すると共有できるようになります。
+    </div>
+
+    <p id="loading" class="loading">読み込み中…</p>
+
+    <div id="error" class="card error-box" hidden>
+      <p id="error-message"></p>
+      <a class="btn" href="./">新しいイベントを作成する</a>
+    </div>
+
+    <div id="app" hidden>
+      <!-- イベント情報 -->
+      <section class="card">
+        <h1 id="ev-title" class="event-title"></h1>
+        <p id="ev-creator" class="meta"></p>
+        <p id="ev-period" class="meta"></p>
+        <p id="ev-desc" class="description" hidden></p>
+        <hr class="divider">
+        <div class="share">
+          <p>ℹ️ このページのURLを参加者に共有してください。</p>
+          <div class="share-row">
+            <input id="share-url" type="text" readonly aria-label="共有URL">
+            <button id="copy-btn" class="btn" type="button">📋 コピー</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 入力グリッド -->
+      <section id="input-section">
+        <h2 class="section-title">✏️ あなたの予定を入力する</h2>
+        <p class="hint">
+          はじめはすべて「○（参加可能）」です。ブラシを選んで、マスをクリックまたはドラッグして塗ってください。<br>
+          日付や時刻の見出しをクリックすると、その行・列をまとめて塗れます。塗りたい記号と同じマスから塗り始めると「○」に戻ります。
+        </p>
+        <div id="palette" class="palette" role="radiogroup" aria-label="ブラシ">
+          <button type="button" class="brush" data-brush="ok" role="radio" aria-checked="false"><span class="sym">○</span>参加可能</button>
+          <button type="button" class="brush" data-brush="maybe" role="radio" aria-checked="false"><span class="sym">△</span>未定</button>
+          <button type="button" class="brush" data-brush="ng" role="radio" aria-checked="true"><span class="sym">×</span>参加不可</button>
+        </div>
+        <div class="table-wrap">
+          <table id="input-grid" class="grid input-grid"></table>
+        </div>
+        <p class="small touch-hint">スマートフォンでは、日付の列や見出しの部分をスワイプすると表を横にスクロールできます。</p>
+      </section>
+
+      <!-- 名前・コメント -->
+      <form id="response-form" class="card" novalidate>
+        <div class="field">
+          <label for="name">お名前<span class="req">*</span></label>
+          <input id="name" class="input" type="text" maxlength="30" autocomplete="name" required>
+          <p id="overwrite-note" class="overwrite-note" hidden></p>
+        </div>
+        <div class="field">
+          <label for="comment">コメント（任意）</label>
+          <input id="comment" class="input" type="text" maxlength="200">
+        </div>
+        <button id="submit-btn" type="submit" class="btn btn-primary btn-block">📨 回答を送信（上書き）</button>
+        <p class="small center">
+          登録した内容を修正するには、同じ名前で上書き登録してください。
+          <button id="reset-btn" type="button" class="link-btn">入力をリセット</button>
+        </p>
+      </form>
+
+      <!-- 回答者一覧 -->
+      <section>
+        <h2 class="section-title">👥 回答者一覧</h2>
+        <p class="hint">名前をクリックすると、回答内容が上のフォームに反映されます。</p>
+        <div id="responders"></div>
+      </section>
+
+      <!-- 集計 -->
+      <section id="summary-section">
+        <h2 class="section-title">📊 現在の回答状況</h2>
+        <h3 class="sub-title">おすすめの時間帯</h3>
+        <ol id="top-list" class="top-list"></ol>
+        <div class="table-wrap">
+          <table id="summary-grid" class="grid summary-grid"></table>
+        </div>
+        <div class="legend">
+          <span><i class="lg-best"></i>全員○</span>
+          <span><i class="lg-good"></i>×なし（△あり）</span>
+          <span><i class="lg-bad"></i>×あり（濃いほど多い）</span>
+          <span><i class="lg-top"></i>おすすめ1位</span>
+        </div>
+        <div id="slot-detail" class="detail"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">日程調整ツール</footer>
+
+  <script type="module" src="js/event.js"></script>
+</body>
+</html>
